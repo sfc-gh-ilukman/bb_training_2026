@@ -19,16 +19,6 @@ Before the session, you need:
 
 ---
 
-## Session Structure
-
-| Session | Topic | Duration |
-|---------|-------|----------|
-| **HOL 1** | Data Engineering & Analytics | 75 min |
-| *Break* | | 10 min |
-| **HOL 2** | Data Exploration & Snowflake Intelligence | 75 min |
-
----
-
 ## Getting Started
 
 ### Step 1: Run the Setup Script (do this first!)
