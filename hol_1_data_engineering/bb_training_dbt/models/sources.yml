@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: raw
+    database: BB_TRAINING
+    schema: RAW
+    tables:
+      - name: RAW_CUSTOMERS
+        description: Business customer profiles for SMEs
+      - name: RAW_LOAN_APPLICATIONS
+        description: Loan applications submitted 2021-2024
+      - name: RAW_TRANSACTIONS
+        description: Repayment and disbursement transactions
+      - name: RAW_RISK_ASSESSMENTS
+        description: Credit risk scoring for each application
