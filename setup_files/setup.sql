@@ -40,6 +40,13 @@ CREATE OR REPLACE SCHEMA BB_TRAINING.SILVER
 CREATE OR REPLACE SCHEMA BB_TRAINING.GOLD
     COMMENT = 'Business-ready aggregated tables';
 
+-- Schemas for dbt Projects (separate from SQL notebook output)
+CREATE OR REPLACE SCHEMA BB_TRAINING.DBT_SILVER
+    COMMENT = 'dbt-managed cleaned data layer';
+
+CREATE OR REPLACE SCHEMA BB_TRAINING.DBT_GOLD
+    COMMENT = 'dbt-managed business-ready aggregated tables';
+
 -- Create a warehouse for the training
 CREATE OR REPLACE WAREHOUSE BB_TRAINING_WH
     WAREHOUSE_SIZE = 'XSMALL'
@@ -47,6 +54,12 @@ CREATE OR REPLACE WAREHOUSE BB_TRAINING_WH
     AUTO_RESUME = TRUE
     INITIALLY_SUSPENDED = FALSE
     COMMENT = 'Warehouse for BB Training HOL';
+
+-- GitHub API integration for dbt Projects workspace
+CREATE OR REPLACE API INTEGRATION bb_training_git_integration
+    API_PROVIDER = git_https_api
+    API_ALLOWED_PREFIXES = ('https://github.com/sfc-gh-ilukman/')
+    ENABLED = TRUE;
 
 -- Use our new warehouse
 USE WAREHOUSE BB_TRAINING_WH;
