@@ -6,19 +6,6 @@ Welcome! This repository contains materials for two hands-on labs covering data 
 
 ---
 
-## Prerequisites
-
-Before the session, you need:
-
-1. **A Snowflake Trial Account** - Sign up at [signup.snowflake.com](https://signup.snowflake.com/)
-   - Choose **Enterprise Edition**
-   - Choose **AWS** as cloud provider
-   - Choose **Asia Pacific (Sydney)** as region
-2. **A modern web browser** (Chrome or Edge recommended)
-3. **That's it!** Everything runs inside Snowsight - no local tools needed.
-
----
-
 ## Getting Started
 
 ### Step 1: Run the Setup Script (do this first!)
@@ -167,29 +154,4 @@ RAW_LOAN_APPLICATIONS (1) ──< (many) RAW_TRANSACTIONS
 | Late payment sectors | Transactions | Hospitality sector has proportionally more Late Fee transactions |
 | Revenue correlation | Customers | Manufacturing/Construction have highest revenues; Hospitality lowest |
 
----
 
-## Troubleshooting
-
-### Common Issues
-
-| Problem | Solution |
-|---------|----------|
-| "Object does not exist" error | Make sure you ran setup.sql completely |
-| Warehouse suspended | It auto-resumes. Just re-run your query. |
-| "Insufficient privileges" | Use ACCOUNTADMIN role (dropdown in top-left) |
-| Notebook won't run | Select a Python kernel (top-right of notebook) |
-| Streamlit app errors | Check that Gold tables exist from HOL 1 |
-
-### Getting Help
-
-- Raise your hand (in-room)
-- Use the chat (virtual attendees)
-- Check that you're using the **ACCOUNTADMIN** role
-- Check that you're using the **BB_TRAINING_WH** warehouse
-
----
-
-## Credits
-
-Built for CBA Business Banking Training | Snowflake 2025
