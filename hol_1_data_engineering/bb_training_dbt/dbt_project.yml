@@ -1,0 +1,16 @@
+name: 'bb_training_pipeline'
+version: '1.0.0'
+
+profile: 'bb_training'
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+
+models:
+  bb_training_pipeline:
+    silver:
+      +materialized: table
+      +schema: DBT_SILVER
+    gold:
+      +materialized: table
+      +schema: DBT_GOLD

@@ -1,0 +1,12 @@
+bb_training:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: 'not needed'
+      user: 'not needed'
+      role: ACCOUNTADMIN
+      database: BB_TRAINING
+      schema: RAW
+      warehouse: BB_TRAINING_WH
+      threads: 4
