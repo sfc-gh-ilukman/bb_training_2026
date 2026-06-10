@@ -1,9 +1,9 @@
-# HOL 2: Data Exploration & Snowflake Intelligence
+# HOL 2: Predictive Analytics & Snowflake Intelligence
 
 ## Overview
 
 In this hands-on lab you will:
-1. Use Cortex Code (AI) to generate exploratory data analysis in a notebook
+1. Build ML models using Cortex Code prompts and Snowflake ML (native classification)
 2. Create a Semantic View over your Gold layer
 3. Set up a Cortex Agent
 4. Launch Snowflake Intelligence for natural language queries
@@ -14,27 +14,14 @@ In this hands-on lab you will:
 
 ---
 
-## Timing Guide
+## Part 1: Predictive Analytics with Snowflake ML
 
-| Step | Activity | Duration | Running Total |
-|------|----------|----------|---------------|
-| 1 | EDA with Cortex Code (5 prompts) | 25 min | 25 min |
-| 2 | Create Semantic View (SQL) | 10 min | 35 min |
-| 3 | Create Cortex Agent | 10 min | 45 min |
-| 4 | Set up Snowflake Intelligence | 10 min | 55 min |
-| 5 | Test SI with sample questions | 10 min | 65 min |
-| 6 | Buffer / Q&A | 10 min | 75 min |
-
----
-
-## Part 1: Data Exploration with Cortex Code
-
-### Create the EDA Notebook
+### Create the ML Notebook
 
 1. In the left sidebar, click **Notebooks**
 2. Click **+ Notebook**
 3. Configure:
-   - **Name:** `BB_EDA`
+   - **Name:** `BB_ML`
    - **Database:** `BB_TRAINING`
    - **Schema:** `GOLD`
    - **Warehouse:** `BB_TRAINING_WH`
@@ -43,11 +30,8 @@ In this hands-on lab you will:
 ### Upload the Notebook (Option A - Recommended)
 If your facilitator has shared the notebook file:
 1. Click **...** menu → **Import .ipynb**
-2. Select `eda_notebook.ipynb`
+2. Select `ml_notebook.ipynb`
 3. Follow the instructions in each section
-
-### Manual Entry (Option B)
-If upload isn't available, follow along with the prompts below.
 
 ### How to Use Cortex Code in Notebooks
 
@@ -57,26 +41,19 @@ If upload isn't available, follow along with the prompts below.
 4. The AI will generate code - review it and press Enter/Accept
 5. Run the cell (Shift+Enter)
 
-### The 5 EDA Prompts
+### The ML Workflow (5 Steps)
 
-Run the setup cell first (establish session), then try each prompt:
+The notebook guides you through a standard ML workflow using prompts:
 
-**Prompt 1: Portfolio Distribution**
-> Using the BB_TRAINING.GOLD.GOLD_CUSTOMER_360 table, create a visualization showing the distribution of total loan exposure (TOTAL_EXPOSURE) broken down by INDUSTRY and CUSTOMER_RISK_CATEGORY. Use a grouped bar chart with matplotlib.
+| Step | What You're Doing | ML Concept |
+|------|-------------------|------------|
+| 1 | Prepare training data | Feature engineering, target definition |
+| 2 | Train a model | Snowflake ML Classification |
+| 3 | Evaluate performance | Accuracy, precision, recall, feature importance |
+| 4 | Make predictions | Scoring the portfolio |
+| 5 | Bonus: second model | Multiclass classification (customer risk) |
 
-**Prompt 2: Monthly Trends**
-> Query BB_TRAINING.GOLD.GOLD_PORTFOLIO_SUMMARY and create a dual-axis chart showing monthly TOTAL_APPLICATIONS (bars) and APPROVAL_RATE (line) over time.
-
-**Prompt 3: Delinquency Heatmap**
-> Using BB_TRAINING.GOLD.GOLD_LOAN_PERFORMANCE, calculate delinquency rate by RISK_TIER and LOAN_PRODUCT. Display as a heatmap.
-
-**Prompt 4: Size vs Risk**
-> From BB_TRAINING.GOLD.GOLD_LOAN_PERFORMANCE, create a scatter plot of average LOAN_AMOUNT vs delinquency rate grouped by LOAN_PRODUCT.
-
-**Prompt 5: Top Customers**
-> Query BB_TRAINING.GOLD.GOLD_CUSTOMER_360 for top 15 customers by TOTAL_EXPOSURE. Create a horizontal bar chart colored by CUSTOMER_RISK_CATEGORY.
-
-> **Note:** Each prompt has a fallback code cell in the notebook. If Cortex Code doesn't generate working code, just run the fallback cell instead.
+**Business question:** Can we predict which loans will have late payments using information available at approval time?
 
 ---
 
@@ -104,29 +81,32 @@ Follow the detailed instructions in **`si_hol.md`** which covers:
 ```
 Gold Layer Tables
        │
-       ▼
-┌─────────────────────┐
-│   Semantic View     │  ← Defines metrics, dimensions, relationships
-│ BB_LENDING_SEMANTIC │
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│   Cortex Agent      │  ← Translates natural language → SQL
-│ BB_LENDING_AGENT    │
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ Snowflake           │  ← Business user interface
-│ Intelligence        │     (chat with your data!)
-└─────────────────────┘
+       ├──────────────────────────────┐
+       │                              │
+       ▼                              ▼
+┌─────────────────────┐    ┌─────────────────────┐
+│   ML Models         │    │   Semantic View     │
+│ loan_default_model  │    │ BB_LENDING_SEMANTIC │
+│ customer_risk_model │    └─────────┬───────────┘
+└─────────────────────┘              │
+                                     ▼
+                          ┌─────────────────────┐
+                          │   Cortex Agent      │
+                          │ BB_LENDING_AGENT    │
+                          └─────────┬───────────┘
+                                    │
+                                    ▼
+                          ┌─────────────────────┐
+                          │ Snowflake           │
+                          │ Intelligence        │
+                          └─────────────────────┘
 ```
 
 ---
 
 ## Key Concepts
 
+- **Snowflake ML Classification** - Native model training without Python packages or data export
 - **Cortex Code** - AI assistant that generates code from natural language prompts
 - **Semantic Views** - Business-friendly definitions over your data model
 - **Cortex Agents** - AI agents that understand your data and answer questions
@@ -154,7 +134,8 @@ Once Snowflake Intelligence is running, try these:
 |-------|----------|
 | Can't find AI & ML section | Use ACCOUNTADMIN role |
 | Semantic view creation fails | Check Gold tables exist first |
+| ML model training fails | Ensure ML_TRAINING_DATA table was created in Step 1 |
 | Agent gives wrong answers | Verify the semantic view references correct tables |
-| Cortex Code not generating code | Try refreshing the page, or use the fallback cells |
+| Cortex Code not generating code | Try refreshing the page |
 | "Warehouse suspended" | Auto-resumes, just retry |
 | SI not available | Check you're using Enterprise edition trial |
