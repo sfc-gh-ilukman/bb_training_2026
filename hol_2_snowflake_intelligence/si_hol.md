@@ -175,6 +175,25 @@ Now try asking questions in natural language! Here are some good test questions:
 - "What is the delinquency rate for each risk tier?"
 - "Which loan product has the best repayment performance?"
 
+### Skill-Powered Questions (invoke the agent's reasoning frameworks)
+
+These prompts trigger the agent skills you've added. The agent will follow a structured multi-step analysis rather than just returning a single query result.
+
+**Loan Risk Advisor:**
+- "A hospitality business with a credit score of 580 wants a $400K equipment finance loan. Should we approve it?"
+- "Assess this application: $1.2M commercial property loan, construction industry, NSW, credit score 690"
+- "Would you recommend approving a $200K line of credit for a retail business with 3 years in operation?"
+
+**Portfolio Health Check:**
+- "Run a health check on our portfolio"
+- "Give me an executive summary of how the lending portfolio is performing"
+- "How's the portfolio doing? Any concerns?"
+
+**Early Warning Scan:**
+- "Are there any loans I should be worried about?"
+- "Run an early warning scan - flag any deteriorating loans"
+- "Which loans are showing signs of distress? What should we do about them?"
+
 ---
 
 ## Troubleshooting
